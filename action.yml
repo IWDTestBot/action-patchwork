@@ -1,0 +1,35 @@
+# action.yml
+name: Patchwork Post Check
+
+description: 'Post a check status to Patchwork'
+
+inputs:
+  user:
+    description: Patchwork User
+    required: true
+  state:
+    description: Check state (pending, pass, fail, error, skip, warning)
+    required: true
+  patchwork_token:
+    description: Patchwork token
+    required: true
+  github_token:
+    description: Github token
+    required: true
+  context:
+    description: Patchwork context
+    required: true
+  description:
+    description: Check description
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    PATCHWORK_TOKEN: ${{ inputs.patchwork_token }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    PW_USER: ${{ inputs.user }}
+    PW_STATE: ${{ inputs.state }}
+    PW_CONTEXT: ${{ inputs.context }}
+    PW_DESCRIPTION: ${{ inputs.description }}
